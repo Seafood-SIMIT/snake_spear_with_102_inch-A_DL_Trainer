@@ -1,0 +1,53 @@
+model:
+  type: 'lstm'
+---
+lstm:
+  input_size: 1
+  hidden_size: 128
+  num_layers: 2
+---
+signal:
+  wavelet_name: 'db3'
+  wavelet_depth: 8    #小波分解层数
+  wavelet_energyfeatures: 16        #小波能量系数特征
+---
+output:
+  target_num: 1
+---
+model:
+  lstm_dim: 400
+  fc1_dim: 32
+  fc2_dim: 64
+  fc3_dim: 32
+  fc4_dim: 16
+  fc5_dim: 64
+---
+data:
+  data_dir: '/root/svdd_torch/deepDS/data/aco_01'  #训练集位置
+  test_size: 0.2
+  channel: 0
+  frame_length: 1024     #帧长度
+---
+train:
+  device: "gpu"
+  epoch: 101
+  batch_size: 64       #每次读取长度
+  num_workers: 0       #并行
+  checkpoint_interval: 2
+  summary_interval: 500
+  optimizer: 'adam'     #学习策略1
+  sgd: 0.01
+  adam: 0.001
+  adabound:             #学习策略2
+    initial: 0.001
+    final: 0.05
+---
+form:
+  input: '*.txt'
+---
+log:
+  chkpt_dir: 'chkpt'
+  log_dir: 'logs'
+  
+  
+  
