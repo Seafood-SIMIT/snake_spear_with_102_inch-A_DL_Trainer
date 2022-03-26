@@ -1,7 +1,7 @@
 method:
-  model_name: "ACOClassifierLSTM"
+  model_name: "SEISClassifierLSTM"
   model_param: "hp.lstm.input_size,hp.lstm.hidden_size,hp.lstm.num_layers"
-  data_type: "aco"
+  data_type: "seis"
   feature: "none" #"none,wavelet,mfcc"
 ---
 lstm:
@@ -10,12 +10,13 @@ lstm:
   num_layers: 2
 ---
 data:
-  data_dir: '/mnt/g/DataBase/aco_seis_Dataset/aco_01'  #训练集位置
+  data_size: 100
+  data_dir: '/root/svdd_torch/data/seis_01' #训练集位置
   test_size: 0.2
   frame_length: 1024     #帧长度
 ---
 train:
-  epoch: 101
+  epoch: 270
   batch_size: 64       #每次读取长度
   num_workers: 0       #并行
   checkpoint_interval: 2

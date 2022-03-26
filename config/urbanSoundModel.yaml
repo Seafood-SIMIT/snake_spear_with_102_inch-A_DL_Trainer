@@ -5,14 +5,15 @@ method:
   feature: "mfcc" #"none,wavelet,mfcc"
 ---
 data:
+  data_size: 100
   #data_dir: '/root/svdd_torch/deepDS/data/aco_01'  #训练集位置
-  data_dir: /mnt/g/DataBase/aco_seis_Dataset/aco_01
+  data_dir: data/aco_01
   test_size: 0.2
   channel: 0
   frame_length: 1024     #帧长度
 ---
 train:
-  epoch: 101
+  epoch: 200
   batch_size: 64       #每次读取长度
   num_workers: 0       #并行
   checkpoint_interval: 2

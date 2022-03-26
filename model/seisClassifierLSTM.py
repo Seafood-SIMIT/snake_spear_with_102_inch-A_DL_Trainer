@@ -18,25 +18,25 @@ class SEISClassifierLSTM(nn.Module):
   
     def __init__(self,lstm_inputsize,lstm_hiddensize,lstm_numlayers):
         super(SEISClassifierLSTM, self).__init__()
-        self.hp = hp
         #假设数据格式不正常
         self.conv = nn.Sequential(
             #cnn1hp.signal.wavelet_energyfeatures
-            nn.Conv1d(1, 4, kernel_size=5, stride=2,bias=True),#nx48x29
-            nn.Conv1d(4, 4, kernel_size=1, stride=1,bias=True),#nx48x29
-            nn.BatchNorm1d(4),
+            nn.Conv1d(1, 8, kernel_size=5, stride=2,bias=True),#nx48x29
+            nn.Conv1d(8, 16, kernel_size=1, stride=1,bias=True),#nx48x29
+            nn.BatchNorm1d(16),
             nn.ReLU(inplace=True),
             nn.MaxPool1d(kernel_size=3,stride=2),#nx48x14
-            nn.Conv1d(4, 8, kernel_size=3, stride=2,bias=True),#nx64x6
-            nn.Conv1d(8, 8, kernel_size=1, stride=1,bias=True),#nx64x6
-            nn.BatchNorm1d(8),
+            nn.Conv1d(16, 32, kernel_size=3, stride=2,bias=True),#nx64x6
+            nn.Conv1d(32, 32, kernel_size=1, stride=1,bias=True),#nx64x6
+            nn.BatchNorm1d(32),
             nn.ReLU(inplace=True),
             nn.MaxPool1d(kernel_size=3,stride=1),#nx64x4
+            nn.Conv1d(32, 8, kernel_size=4, stride=1,bias=True),#nxclass_numx1
             nn.Conv1d(8, 1, kernel_size=4, stride=1,bias=True),#nxclass_numx1
             )
         self.rnn = nn.LSTM(lstm_inputsize,lstm_hiddensize,lstm_numlayers,bias=True,bidirectional=True)
         self.fc1 = nn.Sequential(
-            nn.Linear(hp.lstm.hidden_size*4,64),
+            nn.Linear(lstm_hiddensize*4,64),
             #nn.BatchNorm1d(64),nn.ReLU(),
             nn.Linear(64,3),
             #nn.BatchNorm1d(3),

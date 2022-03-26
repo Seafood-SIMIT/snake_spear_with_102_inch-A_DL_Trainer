@@ -26,11 +26,12 @@ class ACOClassifierLSTM(nn.Module):
             nn.BatchNorm1d(32),
             nn.ReLU(inplace=True),
             nn.MaxPool1d(kernel_size=3,stride=2),#nx48x14
-            nn.Conv1d(4, 8, kernel_size=3, stride=2,bias=True),#nx64x6
-            nn.Conv1d(8, 8, kernel_size=1, stride=1,bias=True),#nx64x6
-            nn.BatchNorm1d(8),
+            nn.Conv1d(32, 64, kernel_size=3, stride=2,bias=True),#nx64x6
+            nn.Conv1d(64, 64, kernel_size=1, stride=1,bias=True),#nx64x6
+            nn.BatchNorm1d(64),
             nn.ReLU(inplace=True),
             nn.MaxPool1d(kernel_size=3,stride=1),#nx64x4
+            nn.Conv1d(64, 8, kernel_size=4, stride=1,bias=True),#nxclass_numx1
             nn.Conv1d(8, 1, kernel_size=4, stride=1,bias=True),#nxclass_numx1
             )
         self.rnn = nn.LSTM(lstm_inputsize,lstm_hiddensize,lstm_numlayers,bias=True,bidirectional=True)

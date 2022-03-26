@@ -1,9 +1,9 @@
 import torch
 import torch.nn as nn
 
-class WavaletAcoModel(nn.Module):
+class WaveletAcoModel(nn.Module):
     def __init__(self):
-        super(wavaletAcoModel, self).__init__()
+        super(WaveletAcoModel, self).__init__()
 
         self.network = nn.Sequential(
             nn.Linear(64,128),

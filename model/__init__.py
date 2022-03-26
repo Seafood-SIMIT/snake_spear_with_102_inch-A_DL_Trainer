@@ -1,8 +1,8 @@
-__all__ = ['ACOClassifierLSTM','UrbanSoundModel','WavaletAcoModel',
+__all__ = ['ACOClassifierLSTM','UrbanSoundModel','WaveletAcoModel',
             'SeismicNet','SEISClassifierLSTM','WaveletSeisModel',]
 from model.acoClassifierLSTM import ACOClassifierLSTM
 from model.urbanSoundModel import UrbanSoundModel
-from model.waveletAcoModel import WavaletAcoModel
+from model.waveletAcoModel import WaveletAcoModel
 
 from model.seismicNet import SeismicNet
 from model.seisClassifierLSTM import SEISClassifierLSTM

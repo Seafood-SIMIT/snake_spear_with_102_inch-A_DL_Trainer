@@ -71,21 +71,22 @@ def train(args, pt_dir, chkpt_path, trainloader, testloader, writer,model, logge
                 #loss.retain_grad()
                 #target_label_cpu=target_label.cpu()
                 #计算train准确率
-                #for i in range(hp.train.batch_size):
-                #    if torch.argmax(predict[i]) == target_label[i]:
-                #        train_acc+=1
-                train_acc+=torch.sum(torch.argmax(predict)==target_label,axis=0)
+                for i in range(hp.train.batch_size):
+                    if torch.argmax(predict[i]) == target_label[i]:
+                        train_acc+=1
+                #train_acc+=np.sum(np.argmax(predict.cpu().numpy())==target_label.cpu().numpy())
     
+            #print(predict.cpu().numpy()==target_label.cpu().numpy())
             logger.info("[Epoch] %d " % step)
 
             logger.info('train_loss:%.6f, train_acc:%.4f'%(loss_sum/all_length_frame, train_acc/all_length_frame))
             writer.log_training(loss_sum,loss_sum/all_length_frame, train_acc/all_length_frame, step)
             
+            val_acc=validate(logger,model, testloader, writer, step, hp,device)
             if valid_model:
                 continue
-            val_acc=validate(model, testloader, writer, step, hp,device)
             if step % hp.train.checkpoint_interval == 0:
-                save_path = os.path.join(pt_dir, '%s_checkout_%dstep[%.2f].pt' % (args.model,step, val_acc))
+                save_path = os.path.join(pt_dir, '%s_checkout_%dstep[%.2f].pt' % (args.model,step, val_acc*100))
                 torch.save({
                     'model':model.state_dict(),
                     #'optimizer':optimizer.state_dict(),

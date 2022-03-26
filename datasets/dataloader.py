@@ -72,7 +72,8 @@ def readData(hp,valid_model,logger):
     if valid_model:
         index_arrange =random.sample(filelist,4)
     else:
-        index_arrange =filelist
+        #index_arrange =filelist
+        index_arrange =random.sample(filelist,hp.data.data_size)
     for file in tqdm(index_arrange):
         if file.startswith('.'):
             continue
@@ -98,7 +99,7 @@ def readData(hp,valid_model,logger):
 def createDataloader(hp,valid_model,logger):
     dataset,label = readData(hp,valid_model,logger)
     #label = np.argmax(label,axis=1)
-    test_size = 0.1 if valid_model else hp.data.test_size
+    test_size = hp.data.test_size
     train_set, test_set,train_label,test_label = train_test_split(dataset, label, test_size = test_size,random_state = 0)
     logger.info("trainSetShape:%s, trainLabelShape:%s, testSetShape:%s, testLabelShape:%s"%(train_set.shape, train_label.shape,test_set.shape,test_label.shape))
     trainloader = DataLoader(dataset=SFDataset(train_set,train_label),

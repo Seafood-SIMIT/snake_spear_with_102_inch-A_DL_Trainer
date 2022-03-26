@@ -3,7 +3,7 @@ import torch.nn as nn
 
 class WaveletSeisModel(nn.Module):
     def __init__(self):
-        super(wavaletSeisModel, self).__init__()
+        super(WaveletSeisModel, self).__init__()
 
         self.network = nn.Sequential(
             nn.Linear(64,128),

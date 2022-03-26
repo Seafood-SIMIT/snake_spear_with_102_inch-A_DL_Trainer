@@ -1,19 +1,22 @@
 method:
-  model_name: "WaveletSeisModel"
+  model_name: "SeismicNet"
   model_param: ""
-  data_type: "seis"  #aco seis
-  feature: "wavelet" #"none,wavelet,mfcc"
+  data_type: "seis"
+  feature: "none" #"none,wavelet,mfcc"
+---
+lstm:
+  input_size: 1
+  hidden_size: 128
+  num_layers: 2
 ---
 data:
-  #data_dir: '/root/svdd_torch/deepDS/data/aco_01'  #训练集位置
   data_size: 100
-  data_dir: data/seis_01
+  data_dir: '/root/svdd_torch/data/seis_01' #训练集位置
   test_size: 0.2
-  channel: 0
   frame_length: 1024     #帧长度
 ---
 train:
-  epoch: 201
+  epoch: 270
   batch_size: 64       #每次读取长度
   num_workers: 0       #并行
   checkpoint_interval: 2
@@ -21,7 +24,7 @@ train:
   sgd: 0.01
   adam: 0.001
   adabound:             #学习策略2
-    initial: 0.001
+    initial: 0.01
     final: 0.05
 ---
 log:

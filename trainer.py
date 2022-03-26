@@ -51,8 +51,6 @@ if __name__ == '__main__':
 
     #验证模型阶段 
     valid_model = args.valid_model
-    if valid_model:
-        hp.train.batch_size = 1
     #输入路径检查
     logger.info("Random data file display: %s "%(random.choice(os.listdir(hp.data.data_dir))))
         
