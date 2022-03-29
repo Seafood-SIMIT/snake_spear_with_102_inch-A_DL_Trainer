@@ -1,6 +1,8 @@
 # Snake Spear with 102 inch
 A DeepLearning Trainer
 一个简单的一维信号分类器的训练程序，一开始继承自谷歌的voicefilter，已经改的面目全非了。但是基本功能还是能用的。
+## 更新
+增加验证模式的batch_size选择。
 ## Usage
 ### 验证模式
 用于验证模型的有效性，只读取两个文件进行快速训练并不保存checkpoint。
@@ -14,3 +16,4 @@ python trainer.py -c config/balabala.yaml -m name -v True
 '''
 python trainer.py -c config/balabala.yaml -m name 
 '''
+

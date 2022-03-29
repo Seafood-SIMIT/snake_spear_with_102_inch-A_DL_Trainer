@@ -56,16 +56,16 @@ if __name__ == '__main__':
         
     writer = MyWriter(hp, log_dir)
     device_name = "cuda" if torch.cuda.is_available() else "cpu"
+    batch_size = hp.valid.batch_size if valid_model else hp.train.batch_size
     logger.info("Device Choice: %s"%(device_name))
     device = torch.device(device_name)
     logger.info("Start Reading Data")
-    trainloader,testloader = createDataloader(hp,valid_model,logger)
+    trainloader,testloader = createDataloader(valid_model,logger,batch_size,hp.data.valid_size)
     logger.info("Down read DataSet")
     
     #model = wavaletAcoModel()
     #model = ACOClassifierLSTM(hp.lstm.input_size,hp.lstm.hidden_size,hp.lstm.num_layers)
     #exec("model = "+hp.method.model+"("+hp.method.model_params+")")
-    expr="model=hp.method.model(hp.method.model_params)"
     
     model=eval("%s(%s)"%(hp.method.model_name,hp.method.model_param))
     logger.info("Model loaded")

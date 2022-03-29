@@ -96,14 +96,13 @@ def readData(hp,valid_model,logger):
         #    return np.array(single_data)[0:3,:],np.array(single_label)[0:3]
     return np.array(single_data),np.array(single_label)
 #制作dataloader
-def createDataloader(hp,valid_model,logger):
+def createDataloader(valid_model,logger,batch_size,valid_size):
     dataset,label = readData(hp,valid_model,logger)
     #label = np.argmax(label,axis=1)
-    test_size = hp.data.test_size
-    train_set, test_set,train_label,test_label = train_test_split(dataset, label, test_size = test_size,random_state = 0)
+    train_set, test_set,train_label,test_label = train_test_split(dataset, label, test_size = valid_size,random_state = 0)
     logger.info("trainSetShape:%s, trainLabelShape:%s, testSetShape:%s, testLabelShape:%s"%(train_set.shape, train_label.shape,test_set.shape,test_label.shape))
     trainloader = DataLoader(dataset=SFDataset(train_set,train_label),
-                        batch_size = hp.train.batch_size,
+                        batch_size = batch_size,
                         #batch_size=1,
                         shuffle=True,
                         #num_workers=hp.train.num_workers,
@@ -114,7 +113,7 @@ def createDataloader(hp,valid_model,logger):
                         )
     validloader = DataLoader(dataset=SFDataset(test_set,test_label),
                         #collate_fn=test_collate_fn,
-                        batch_size=hp.train.batch_size, shuffle=False, num_workers=0,
+                        batch_size=batch_size, shuffle=False, num_workers=0,
                         drop_last = True)
     return trainloader, validloader
     

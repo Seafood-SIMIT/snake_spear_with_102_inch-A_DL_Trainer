@@ -4,6 +4,9 @@ method:
   data_type: "aco"
   feature: "none" #"none,wavelet,mfcc"
 ---
+valid:
+  batch_size: 2
+---
 lstm:
   input_size: 1
   hidden_size: 128
@@ -11,10 +14,9 @@ lstm:
 ---
 data:
   #data_dir: '/root/svdd_torch/deepDS/data/aco_01'  #训练集位置
-  data_size: 100
+  data_size: 0    #0表示全部
   data_dir: 'data/aco_01' #/mnt/g/DataBase/aco_seis_Dataset/aco_01
-  test_size: 0.2
-  channel: 0
+  valid_size: 0.2
   frame_length: 1024     #帧长度
 ---
 train:
