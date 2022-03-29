@@ -6,6 +6,8 @@ Created on Thu Dec 10 09:13:10 2020
 @author: sunlin
 """
 
+from datasets import createDataloader
+from model import ACOClassifierLSTM
 import os
 import time
 import torch
@@ -16,8 +18,7 @@ import argparse
 from utils.train import train
 from utils.hparams import HParam,logAndCheckpoinrDirConfig
 from utils.writer import MyWriter
-from datasets import *
-from model import *
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--config', type=str, required=True,help="yaml file for configuration")
